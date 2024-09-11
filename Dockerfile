@@ -20,7 +20,7 @@ COPY . .
 RUN bun run build
 
 # Expose the port your SvelteKit app will run on
-ENV PORT=8080
+ENV PORT=3000
 EXPOSE $PORT
 
 # Start the SvelteKit application
