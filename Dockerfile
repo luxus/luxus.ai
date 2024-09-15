@@ -1,18 +1,27 @@
-FROM oven/bun
+# Use an official Node.js runtime as a parent image
+FROM node:22
 
+# Set the working directory inside the container
 WORKDIR /app
 
-COPY package.json .
-COPY bun.lockb .
+# Copy the package.json and bun.lockb to the container
+COPY package.json bun.lockb ./
 
-RUN bun install --production
+# Install Bun
+RUN npm install -g bun
 
-COPY src src
-COPY tsconfig.json .
-# COPY public public
+# Install project dependencies using Bun
+RUN bun install
 
-ENV NODE_ENV production
+# Copy the rest of the application code to the container
+COPY . .
 
-#Start the BUN server
-CMD ["bun", "./src/index.js"]
-EXPOSE 3000
+# Build your SvelteKit application using Bun
+RUN bun run build
+
+# Expose the port your SvelteKit app will run on
+ENV PORT=3000
+EXPOSE $PORT
+
+# Start the SvelteKit application
+CMD ["bun", "./build/index.js"]

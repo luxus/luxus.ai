@@ -16,5 +16,14 @@ CREATE TABLE `session` (
 );
 --> statement-breakpoint
 CREATE TABLE `user` (
-	`id` text PRIMARY KEY NOT NULL
+	`id` text NOT NULL,
+	`email` text NOT NULL,
+	`name` text NOT NULL,
+	`last_name` text NOT NULL,
+	`provider_id` text NOT NULL,
+	`provider` text NOT NULL,
+	PRIMARY KEY(`provider`, `provider_id`)
 );
+--> statement-breakpoint
+CREATE UNIQUE INDEX `user_id_unique` ON `user` (`id`);--> statement-breakpoint
+CREATE UNIQUE INDEX `user_email_unique` ON `user` (`email`);
